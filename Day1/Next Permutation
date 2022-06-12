@@ -1,0 +1,27 @@
+#include <bits/stdc++.h> 
+vector<int> nextPermutation(vector<int> &permutation, int n)
+{
+    //  Write your code here.
+         //find a breakpoint
+        int i,j;
+        for(i=permutation.size()-2;i>=0;i--)
+            if(permutation[i+1]>permutation[i])
+                break;
+
+        // if no breakpoint found then the iterator i will be less than 0
+        if(i<0){
+            reverse(permutation.begin(),permutation.end());
+            return permutation;
+        }
+        // find suitable replacement of breakpoint and swap
+       else
+       {
+           for(j = n-1;  j>i; j--)
+               if(permutation[j]>permutation[i])
+                   break;
+           swap(permutation[j],permutation[i]);
+           reverse(permutation.begin()+i+1,permutation.end());
+           return permutation;
+       }
+        
+}
