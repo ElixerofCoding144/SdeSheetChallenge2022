@@ -1,0 +1,21 @@
+void LeftViewFind(TreeNode<int> *root, int *new_level, int next_level, vector <int>&ans)
+{
+    //base case
+    if(root == NULL)
+        return;
+    if(*new_level < next_level)
+    {
+        ans.push_back(root->data);
+        *new_level= next_level;
+    }
+    LeftViewFind(root->left, new_level, next_level+1, ans);
+    LeftViewFind(root->right, new_level, next_level+1, ans);
+}
+vector<int> getLeftView(TreeNode<int> *root)
+{
+    //    Write your code here
+    vector <int> ans;
+    int new_level = 0;
+    LeftViewFind(root, &new_level, 1, ans);
+    return ans;
+}
