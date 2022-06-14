@@ -1,1 +1,46 @@
+/*************************************************************
+ 
+    Following is the Binary Tree node structure.
+
+    class BinaryTreeNode 
+    {
+    public : 
+        T data;
+        BinaryTreeNode<T> *left;
+        BinaryTreeNode<T> *right;
+
+        BinaryTreeNode(T data) {
+            this -> data = data;
+            left = NULL;
+            right = NULL;
+        }
+    };
+
+*************************************************************/
+
+vector<int> bottomView(BinaryTreeNode<int> * root){
+
+    // Write your code here.
+    vector <int> ans;
+    if(root==NULL) return ans;
+    queue <pair<BinaryTreeNode<int>*, int> > q;
+    q.push({root, 0});
+    map <int, int> bottomViewNodes;
+    while(!q.empty())
+    {
+        auto itr = q.front();
+        q.pop();
+        BinaryTreeNode<int>*node = itr.first;
+        int line_num = itr.second;
+        bottomViewNodes[line_num] = node->data;
+         if(node->left!=NULL)
+            q.push({node->left,line_num-1});
+        if(node->right!=NULL)
+            q.push({node->right,line_num+1});        
+    }
+    for(auto i:bottomViewNodes)
+        ans.push_back(i.second);
+    return ans;   
+}
+
 
