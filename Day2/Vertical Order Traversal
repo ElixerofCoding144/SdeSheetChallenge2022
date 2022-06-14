@@ -1,0 +1,79 @@
+/************************************************************
+
+Following is the Binary Tree node class
+    
+template <typename T = int>
+class TreeNode
+{
+public:
+    T data;
+    TreeNode<T> *left;
+    TreeNode<T> *right;
+
+    TreeNode(T val)
+    {
+        this->data = val;
+        left = NULL;
+        right = NULL;
+    }
+
+    ~TreeNode()
+    {
+        if (left != NULL)
+        {
+            delete left;
+        }
+        if (right != NULL)
+        {
+            delete right;
+        }
+    }
+};
+#include<bits/stdc++.h> 
+************************************************************/
+
+#include<bits/stdc++.h>
+vector<int> verticalOrderTraversal(TreeNode<int> *root)
+{
+   //    Write your code here.
+    vector<int>ans;
+    if(root==NULL)return ans;
+  //map<vertical line, map<horizontal level, multiset<int>>> nodes;
+  //Internally, multiset containers keep all their elements sorted.
+  //but here we dont need the least node value positioneed at same level and same vertical line
+ //hence, using vector to store the node values
+   map<int,map<int, vector<int>>> mpp;
+    //queue<pair<Node, pair<vertical line, horizontal level>>> q;
+    queue<pair<TreeNode<int> *, pair<int, int>>> q;
+    q.push({root, {0,0}});
+    while(!q.empty())
+    {
+        auto itr = q.front();
+        q.pop();
+        TreeNode<int> * temp = itr.first;
+        int vertical_line = itr.second.first;
+        int horizontal_level = itr.second.second;
+        mpp[vertical_line][horizontal_level].push_back(temp->data);
+        if(temp->left)
+            q.push({temp->left, {vertical_line-1, horizontal_level+1}});
+        if(temp->right)
+            q.push({temp->right, {vertical_line+1, horizontal_level+1}});        
+    }
+    vector<vector<int>> t;
+for(auto i : mpp){
+       vector<int> levelAndNode;
+       for(auto p : i.second){
+           levelAndNode.insert(levelAndNode.end(),p.second.begin(),p.second.end());
+       }
+       t.push_back(levelAndNode);
+   }
+  
+   for(auto j : t){
+       for(auto p : j){
+           ans.push_back(p);
+       }
+   }
+   return ans;
+}
+
+    
