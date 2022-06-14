@@ -1,0 +1,59 @@
+/************************************************************
+
+    Following is the Binary Tree node structure:
+    
+************************************************************/
+
+class BinaryTreeNode
+{
+public :
+    T data;
+    BinaryTreeNode<T> *left;
+    BinaryTreeNode<T> *right;
+
+    BinaryTreeNode(T data) {
+        this -> data = data;
+        left = NULL;
+        right = NULL;
+    }
+};
+
+void inOrderGet(BinaryTreeNode<int> *root, vector<int>&inOrder)
+{
+    if(root==NULL)return;
+    inOrderGet(root->left, inOrder);
+    inOrder.push_back(root->data);
+    inOrderGet(root->right,inOrder);
+    return;
+}
+void preOrderGet(BinaryTreeNode<int> *root, vector<int>&preOrder)
+{
+    if(root==NULL)return;
+    preOrder.push_back(root->data);
+    preOrderGet(root->left, preOrder);
+    preOrderGet(root->right,preOrder);
+    return;
+}
+void postOrderGet(BinaryTreeNode<int> *root, vector<int>&postOrder)
+{
+    if(root==NULL)return;
+    postOrderGet(root->left, postOrder);
+    postOrderGet(root->right, postOrder);
+    postOrder.push_back(root->data);
+    return;
+}
+
+vector<vector<int>> getTreeTraversal(BinaryTreeNode<int> *root){
+    // Write your code here.
+    vector<vector<int>>ans;
+    vector<int>inOrder;
+    vector<int>preOrder;
+    vector<int>postOrder;
+    inOrderGet(root, inOrder);
+    preOrderGet(root, preOrder);
+    postOrderGet(root, postOrder);
+    ans.push_back(inOrder);
+    ans.push_back(preOrder);
+    ans.push_back(postOrder);
+    return ans;
+}
