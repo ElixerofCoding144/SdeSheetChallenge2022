@@ -1,0 +1,59 @@
+#include <bits/stdc++.h> 
+
+void rotateMatrix(vector<vector<int>> &mat, int n, int m)
+{
+    // Write your code here
+    int row = 0, column = 0;
+    int previous, current;
+    while(row<n && column<m)//to move further into inner rows & columns
+    {
+        //if the row and column have exceeded then come out of the loop 
+        if(row+1==n||column+1==m)
+            break;
+        //store the previous value 
+        int previous = mat[row+1][column];
+        //horizontal row
+        for(int i = column; i < m; i++)
+        {
+            //swapping value of previous column and current column while staying in a same row 
+            current = mat[row][i];
+            mat[row][i] = previous;
+            previous = current;
+        }
+        //changing the row
+        row++;
+        for(int i = row; i < n; i++)
+        {
+            //swapping value of previous row and current row while staying in a same column
+            //right column
+            current = mat[i][m-1];
+            mat[i][m-1] = previous;
+            previous = current;
+        }
+        //decrementing the number of columns as we have to work on less columns
+        m--;
+        if(row<n)
+        {
+            //taking i = m-1 as we will stop at 0; the value of right most bottom row has been stored in previous while running the previous loop
+            for (int i = m-1; i >= column; i--)
+           {
+               current = mat[n-1][i];
+               mat[n-1][i] = previous;
+               previous = current;
+           }
+        }
+         //decrementing the number of rows as we have to work on less rows
+        n--;
+        if(column<m)
+        {
+            //taking i = n-1 as we will stop at 0; the value of left most bottom row has been stored in previous while running the previous loop
+            for(int i = n-1;i>=row; i--)
+            {
+                current = mat[i][column];
+                mat[i][column] = previous;
+                previous = current;
+            }
+        }
+        column++;
+    }
+}
