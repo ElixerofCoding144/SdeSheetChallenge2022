@@ -1,0 +1,38 @@
+#include <bits/stdc++.h> 
+
+vector<int> ninjaAndSortedArrays(vector<int>& arr1, vector<int>& arr2, int m, int n) {
+	// Write your code here.
+    vector <int> mergedSortedArray;
+    int idx1=0, idx2=0;
+    while(idx1 < m && idx2 < n)//will run until none of them is exhausted
+    {
+        if(arr1[idx1]<arr2[idx2])
+        {
+            mergedSortedArray.push_back(arr1[idx1]);
+            idx1++;
+        }   
+        else if(arr1[idx1]==arr2[idx2])
+        {
+             mergedSortedArray.push_back(arr1[idx1]);
+             mergedSortedArray.push_back(arr2[idx2]);
+            idx1++; idx2++;
+        }
+        else
+        {
+             mergedSortedArray.push_back(arr2[idx2]);
+             idx2++;
+        }        
+    }
+    //if arr2 is exhausted
+    while(idx1 < m)
+    {
+        mergedSortedArray.push_back(arr1[idx1]);
+        idx1++;
+    }
+    while(idx2 < n)
+    {
+        mergedSortedArray.push_back(arr2[idx2]);
+        idx2++;
+    }
+    return mergedSortedArray;
+}
